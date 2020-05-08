@@ -62,4 +62,3 @@ def alexnet(pretrained=False, progress=True, **kwargs):
                                               progress=progress)
         model.load_state_dict(state_dict,strict=False)
     return model
-© 2020 GitHub, Inc.
