@@ -70,7 +70,4 @@ def alexnet(pretrained=False, progress=True, **kwargs):
         state_dict = load_state_dict_from_url(model_urls['alexnet'],
                                               progress=progress)
         model.load_state_dict(state_dict,strict=False)
-        model.classifier[6] == nn.Linear(4096,7)
-        model.domain_classifier.load_state_dict(model.classifier.state_dict())
-        model.domain_classifier[6] = nn.Linear(4096,2)
     return model
