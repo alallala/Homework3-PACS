@@ -66,11 +66,11 @@ def alexnet(pretrained=False, progress=True, **kwargs):
         progress (bool): If True, displays a progress bar of the download to stderr
     """
     model = AlexNet(**kwargs)
+    model.classifier[6] = nn.Linear(4096,num_classes)
     if pretrained:
         state_dict = load_state_dict_from_url(model_urls['alexnet'],
                                               progress=progress)
         model.load_state_dict(state_dict,strict=False)
-        model.domain_classifier[6] == nn.Linear(4096,num_classes)
         model.domain_classifier.load_state_dict(model.classifier.state_dict())
         model.domain_classifier[6] = nn.Linear(4096,2)
     return model
