@@ -13,7 +13,7 @@ model_urls = {
 
 class AlexNet(nn.Module):
 
-    def __init__(self, num_classes=7, num_classes2=2):
+    def __init__(self, num_classes=7):
         super(AlexNet, self).__init__()
         self.features = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=11, stride=4, padding=2),
@@ -40,14 +40,14 @@ class AlexNet(nn.Module):
             nn.ReLU(inplace=True),
             nn.Linear(4096, num_classes),
         )
-        self.binary_classifier = nn.Sequential(
+        self.domain_classifier = nn.Sequential(
             nn.Dropout(),
             nn.Linear(256 * 6 * 6, 4096),
             nn.ReLU(inplace=True),
             nn.Dropout(),
             nn.Linear(4096, 4096),
             nn.ReLU(inplace=True),
-            nn.Linear(4096, num_classes2),
+            nn.Linear(4096, num_classes),
         )
 
     def forward(self, x):
@@ -70,4 +70,6 @@ def alexnet(pretrained=False, progress=True, **kwargs):
         state_dict = load_state_dict_from_url(model_urls['alexnet'],
                                               progress=progress)
         model.load_state_dict(state_dict,strict=False)
+        model.domain_classifier.load_state_dict(model.classifier.state_dict())
+        model.domain_classifier[6] = nn.Linear(4096,2)
     return model
