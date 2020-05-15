@@ -67,7 +67,7 @@ class AlexNet(nn.Module):
     def forward(self, x, alpha=None):
         
         features = self.features(x)
-        features = self.avgpool(x)
+        features = self.avgpool(features)
         # Flatten the features:
         features = features.view(features.size(0), -1)
         # If we pass alpha, we can assume we are training the discriminator
