@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch.hub import load_state_dict_from_url
 
 
-__all__ = ['AlexNet', 'alexnet']
+#__all__ = ['AlexNet', 'alexnet']
 
 
 model_urls = {
